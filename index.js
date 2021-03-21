@@ -29,7 +29,7 @@ if (pastSearch !==null ) {
 
 //function to get current user location weather
 
-function CurrentWeather() {
+function currentWeather() {
     navigator.geolocation.getCurrentPosition( function (position) {
         latitude = position.coords.latitude;
         longitude =position.coords.longitude; 
