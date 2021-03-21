@@ -45,11 +45,50 @@ function CurrentWeather() {
 
         console.log(response);
 
-        var city= $(".city")
+        var city= $(".city").html("<strong>" +"Currentlocation: " + response.name + "</strong" + "( " + (date.getMonth() +1) + "-" + date.getDate() + "-" + date.getFullYear() +")");
+        city.append(("<img id='wicon' src='' alt='Weather icon'>"));
+        $(".temp").text("Temperature(F): " + ((response.main.temp- 273.15) *1.80 +32).toFixed(2));
+        $(".wind").text("Wind Speed:" + response.wind.speed);
+        $(".humidity").text("Humidity:" + response.main.humidity);
+        $(".uvIndex").text("UV Index:");
+        $('#wicon').attr('src', iconurl);
+
+        var cityLat = response.coord.lat;
+        var cityLng = response.coord.lon;
+
+        //get UV Index
+        $.ajax({
+            url: "https://api.openweathermap.org/data/2.5/uvi?appid=" + API + "&lat=" + cityLat + "&lon=" + cityLng,
+            method: "GET"
+        })
+        .then (function(response) {
+            $(".uvIndex").text("UV Index:" +response.value); 
+
+            console.log(response)
+        })
     })
     
     
     })
+}
+
+currentWeather()
+searchHistory()
+
+function showResults() {
+    if (city !== "") {
+
+        var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + API; 
+
+        $.ajax({
+            url: queryURL,
+            method: "GET"
+        })
+        .then(function(response) {
+            console.log(response); 
+        })
+
+    }
 }
 
 }) 
