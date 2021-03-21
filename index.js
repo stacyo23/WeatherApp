@@ -27,6 +27,29 @@ if (pastSearch !==null ) {
 
 }
 
+//function to get current user location weather
 
+function CurrentWeather() {
+    navigator.geolocation.getCurrentPosition( function (position) {
+        latitude = position.coords.latitude;
+        longitude =position.coords.longitude; 
+
+        var queryURL ="https://api.openweathermap.org/data/2.5/weather?lat=" +latitude + "&lon=" +longitude + "&appid=" +API; 
+    $.ajax({
+        url: queryURL, 
+        method: "GET"
+    })
+    .then(function (response) {
+        var iconcode = response.weather[0].icon; 
+        var iconurl = "http://openweathermap.org/img/w/" +iconcode +".png";
+
+        console.log(response);
+
+        var city= $(".city")
+    })
+    
+    
+    })
+}
 
 }) 
